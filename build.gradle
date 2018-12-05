@@ -1,0 +1,103 @@
+buildscript {
+	ext {
+		springBootVersion = '2.1.1.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.riverbed.itim'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+	maven { url "https://repo.spring.io/milestone" }
+}
+
+ext['springCloudVersion'] = 'Greenwich.M3'
+
+dependencies {
+    //service-monitor
+	implementation('org.springframework.boot:spring-boot-starter')
+	implementation('org.springframework.boot:spring-boot-starter-actuator')
+	implementation('org.springframework.boot:spring-boot-starter-web')
+	implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+	implementation('org.springframework.boot:spring-boot-configuration-processor')
+	implementation('org.springframework.boot:spring-boot-starter-aop')
+	implementation('org.springframework.cloud:spring-cloud-starter-config')
+	implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
+	implementation('com.h2database:h2:1.4.197')
+	implementation('io.springfox:springfox-swagger2:2.8.0')
+	implementation('io.springfox:springfox-swagger-ui:2.8.0')
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+	testImplementation('com.h2database:h2:1.4.197')
+	compileOnly('org.projectlombok:lombok:1.16.16')
+
+    //job-service-client
+    compile('org.springframework.boot:spring-boot-starter')
+    compile('org.springframework.boot:spring-boot-starter-data-rest')
+    compile('org.springframework.cloud:spring-cloud-starter-bus-amqp')
+    compile('org.springframework.boot:spring-boot-starter-aop')
+    compile('com.riverbed.sda:tenant-utils-client:10.0-SNAPSHOT')
+    compileOnly('org.projectlombok:lombok:1.16.16')
+    annotationProcessor('org.projectlombok:lombok:1.16.16')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    //job-service-api
+    compile('com.fasterxml.jackson.core:jackson-annotations:2.8.0')
+    compile('javax.validation:validation-api:2.0.0.Final')
+    compile('io.springfox:springfox-swagger2:2.8.0')
+    compile('org.codehaus.jettison:jettison:1.2')
+    compileOnly('org.projectlombok:lombok:1.16.16')
+    annotationProcessor('org.projectlombok:lombok:1.16.16')
+
+    //job-service-server
+    compile('net.sf.trove4j:trove4j:3.0.3')
+    compile('org.springframework.boot:spring-boot-starter')
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile('org.springframework.boot:spring-boot-starter-batch')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.springframework.boot:spring-boot-starter-data-rest')
+    compile('org.springframework.boot:spring-boot-starter-integration')
+    compile('org.springframework.boot:spring-boot-starter-quartz')
+    compile('org.springframework.batch:spring-batch-integration')
+    compile('org.springframework.boot:spring-boot-starter-aop')
+    compile('org.springframework.cloud:spring-cloud-starter-config')
+    compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
+    compile('org.springframework.cloud:spring-cloud-config-client')
+    compile('org.springframework.cloud:spring-cloud-starter-bus-amqp')
+    compile('org.jolokia:jolokia-core')
+    compile('org.modelmapper.extensions:modelmapper-spring:1.1.3')
+    runtime('org.flywaydb:flyway-core:5.1.4')
+    runtime('mysql:mysql-connector-java:8.0.12')
+    compile('io.springfox:springfox-swagger2:2.9.2')
+    compile('io.springfox:springfox-swagger-ui:2.9.2')
+    compile('io.micrometer:micrometer-registry-influx:1.0.6')
+    compile('com.riverbed.sda:tenant-utils-server:10.0-SNAPSHOT')
+    compile('com.h2database:h2:1.4.197')
+    compileOnly('org.projectlombok:lombok:1.16.16')
+    annotationProcessor('org.projectlombok:lombok:1.16.16')
+    testCompile('com.h2database:h2:1.4.197')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.security:spring-security-test:4.2.6.RELEASE')
+    testCompile('org.apache.qpid:qpid-broker-core:7.0.6')
+    testCompile('org.apache.qpid:qpid-broker-plugins-amqp-0-8-protocol:7.0.6')
+    testCompile('org.apache.qpid:qpid-broker-plugins-amqp-1-0-protocol:7.0.6')
+    testCompile('org.apache.qpid:qpid-broker-plugins-memory-store:7.0.6')
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
